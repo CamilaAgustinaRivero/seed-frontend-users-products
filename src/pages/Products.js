@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Axios from 'axios';
-import Title from './components/Title';
-import ProductsTable from './components/ProductsTable';
+import Title from '../components/Title';
+import ProductsTable from '../components/ProductsTable';
 
 const fetchProducts = async () => {
   const {data, status} = await Axios.get('http://localhost:3001/api/products');
@@ -12,7 +12,7 @@ const fetchProducts = async () => {
   return data;
 }
 
-class App extends Component {
+class Products extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -53,4 +53,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Products;
