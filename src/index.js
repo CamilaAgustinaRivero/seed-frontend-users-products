@@ -9,13 +9,11 @@ import CreateStore from './store';
 const store = CreateStore();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App>
-        <Products/>
-      </App>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <App>
+      <Products/>
+    </App>
+  </Provider>,
   document.getElementById('root')
 );
 

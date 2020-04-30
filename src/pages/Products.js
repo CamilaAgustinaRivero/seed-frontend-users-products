@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import Axios from 'axios';
+import {connect} from 'react-redux';
 import Title from '../components/Title';
 import ProductsTable from '../components/ProductsTable';
+import {fetchProductRequested, fetchProductSucceeded} from '../actions/product';
 
 const fetchProducts = async () => {
   const {data, status} = await Axios.get('http://localhost:3001/api/products');
@@ -13,33 +15,14 @@ const fetchProducts = async () => {
 }
 
 class Products extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      documents: [],
-      headers: [
-        {
-          label: 'PRODUCTO',
-          key: 'name'
-        },
-        {
-          label: 'PRECIO',
-          key: 'price'
-        }, 
-        {
-          label: 'STOCK',
-          key: 'stock'
-        }
-      ]
-    }
-  }
-
   async componentDidMount() {
+    this.props.requestProduct();
     const documents = await fetchProducts();
-    this.setState({documents});
+    this.props.productSucceeded(documents);
+    this.forceUpdate();
   }
   render(){
-    const {documents, headers} = this.state;
+    const {headers, documents} = this.props;
     return (
       <div>
         <header>
@@ -52,5 +35,19 @@ class Products extends Component {
     );
   }
 }
+//mapStateToProps - Tomo el store y se lo paso al componente como props
+//MapDispatchtoProps - Tomo las acciones y se lo paso al componente como props
+//mergeProps - Fuciona accinoes y propiedades
 
-export default Products;
+//Nuestro Store, Todas las propiedades que vienen por herencia
+const mapStateToProps = (state) => ({
+  headers: state.product.headers,
+  documents: state.product.products
+})
+//Nuestro disparador de acciones, Todas las propiedades que vienen por herencia
+const mapDispatchToProps = (dispatch) => ({
+  requestProduct: () => dispatch(fetchProductRequested()),
+  productSucceeded: products => dispatch(fetchProductSucceeded(products))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Products);
