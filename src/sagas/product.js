@@ -15,4 +15,3 @@ export function* fetchProducts({filter}) {
     const products = yield call (apiCallProducts, filter);
     yield put(fetchProductSucceeded(products));
 }
-

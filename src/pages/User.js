@@ -1,23 +1,23 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Title from '../components/Title';
-import ProductsTable from '../components/ProductsTable';
-import {fetchProductRequested, fetchProductSucceeded} from '../actions/product';
+import UsersTable from '../components/Table';
+import {fetchUserRequested} from '../actions/user';
 
 
-class Products extends Component {
+class Users extends Component {
   async componentDidMount() {
-    this.props.requestProduct();
+    this.props.requestUser();
   }
   render(){
     const {headers, documents} = this.props;
     return (
       <div>
         <header>
-          <Title title="Lista de productos"/>
+          <Title title="Lista de usuarios"/>
         </header>
         <body>
-          <ProductsTable {...{documents, headers}}/> 
+          <UsersTable {...{documents, headers}}/> 
         </body>
       </div>
     );
@@ -29,13 +29,12 @@ class Products extends Component {
 
 //Nuestro Store, Todas las propiedades que vienen por herencia
 const mapStateToProps = (state) => ({
-  headers: state.product.headers,
-  documents: state.product.products
+  headers: state.user.headers,
+  documents: state.user.users
 })
 //Nuestro disparador de acciones, Todas las propiedades que vienen por herencia
 const mapDispatchToProps = (dispatch) => ({
-  requestProduct: () => dispatch(fetchProductRequested()),
-  productSucceeded: products => dispatch(fetchProductSucceeded(products))
+  requestUser: () => dispatch(fetchUserRequested())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Products);
+export default connect(mapStateToProps, mapDispatchToProps)(Users);

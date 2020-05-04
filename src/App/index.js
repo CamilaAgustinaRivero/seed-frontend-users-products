@@ -1,14 +1,26 @@
 import React, {Fragment} from 'react';
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Header from './Header';
 import Footer from './Footer';
+import Home from './Home';
+import Products from '../pages/Product';
+import Users from '../pages/User';
 
-const Index = ({children}) => (
+const Index = () => (
     <Fragment>
-        <Header/>
-        <main>
-            {children}
-        </main>
-        <Footer/>
+        <Router>
+            <Header/>
+            <main>
+                <div>
+                    <Switch>
+                        <Route path="/products" component={Products}/>
+                        <Route path="/users" component={Users}/>
+                        <Route path="/" component={Home}/>
+                    </Switch>
+                </div>
+            </main>
+            <Footer/>
+        </Router>
     </Fragment>
 );
 
