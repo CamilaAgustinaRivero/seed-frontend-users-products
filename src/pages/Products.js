@@ -1,25 +1,13 @@
 import React, {Component} from 'react';
-import Axios from 'axios';
 import {connect} from 'react-redux';
 import Title from '../components/Title';
 import ProductsTable from '../components/ProductsTable';
 import {fetchProductRequested, fetchProductSucceeded} from '../actions/product';
 
-const fetchProducts = async () => {
-  const {data, status} = await Axios.get('http://localhost:3001/api/products');
-  console.log(data);
-  if (status !== 200) {
-    return [];
-  } 
-  return data;
-}
 
 class Products extends Component {
   async componentDidMount() {
     this.props.requestProduct();
-    const documents = await fetchProducts();
-    this.props.productSucceeded(documents);
-    this.forceUpdate();
   }
   render(){
     const {headers, documents} = this.props;
