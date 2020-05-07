@@ -33,7 +33,7 @@ export function* fetchUsers({filter}) {
 }
 
 export function* submitUser () {
-  const {currentUsers} = yield select (state => state.users);
+  const {currentUsers} = yield select (state => state.user);
   const {status, data} = yield call(apiSaveUser, currentUsers);
   yield put (submitUserSucceeded(status, data));  
 }
