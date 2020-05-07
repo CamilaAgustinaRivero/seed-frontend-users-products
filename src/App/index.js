@@ -4,7 +4,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Home from './Home';
 import Products from '../pages/Product';
-import Users from '../pages/User';
+import Users from '../pages/Users';
 
 const Index = () => (
     <Fragment>

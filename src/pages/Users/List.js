@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Title from '../components/Title';
-import UsersTable from '../components/Table';
-import {fetchUserRequested} from '../actions/user';
+import {Link} from 'react-router-dom';
+import Title from '../../components/Title';
+import UsersTable from '../../components/Table';
+
+import {fetchUsersRequested} from '../../actions/user';
 
 
 class Users extends Component {
@@ -15,9 +17,10 @@ class Users extends Component {
       <div>
         <header>
           <Title title="Lista de usuarios"/>
+          <Link to={'/users/new'}> Nuevo usuario </Link>
         </header>
         <body>
-          <UsersTable {...{documents, headers}}/> 
+          <UsersTable {...{documents, headers, linkTo:'/users'}}/> 
         </body>
       </div>
     );
@@ -34,7 +37,7 @@ const mapStateToProps = (state) => ({
 })
 //Nuestro disparador de acciones, Todas las propiedades que vienen por herencia
 const mapDispatchToProps = (dispatch) => ({
-  requestUser: () => dispatch(fetchUserRequested())
+  requestUser: () => dispatch(fetchUsersRequested())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);
