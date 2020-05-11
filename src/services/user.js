@@ -1,20 +1,13 @@
 import Axios from 'axios';
+import HTTP from './http';
+
 export default class User {
     static async apiCallUsers () {
-        const {data, status} = await Axios.get('http://localhost:3001/api/users');
-        console.log(data);
-        if (status !== 200) {
-          return [];
-        } 
-        return data;
+        return HTTP.get('api/users');
     }
     
     static async apiCallOne(id) {
-      const {data, status} = await Axios.get(`http://localhost:3001/api/users/${id}`);
-      if (status !== 200) {
-        return {};
-      } 
-      return data;
+      return HTTP.get(`api/users/${id}`);
     }
     
     static async apiSaveUser(user) {

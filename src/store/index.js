@@ -8,14 +8,13 @@ const sagaMiddleware = saga();
 export default(initialState = {}) => {
 
     //Redux Dev Tools
-    const composeEnhacer = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE_) || compose;
-
+    const composeEnhancer = (typeof window !== 'undefined' && window._REDUX_DEVTOOLS_EXTENSION_COMPOSE_) || compose;
     /**
      * Actions ---
      * Reducers --- Store
      */
 
-    const enhancer = applyMiddleware(sagaMiddleware);
+    const enhancer = composeEnhancer(applyMiddleware(sagaMiddleware));
     const store = createStore(reducers, initialState, enhancer);
 
     sagaMiddleware.run(sagas);
