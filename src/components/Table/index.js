@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-const Table = ({documents, headers, linkTo}) => (
+const Table = ({documents, headers, linkTo, onDelete, primaryKey = 'id'}) => (
     <table>
         <thead>
             <tr>
@@ -17,7 +17,10 @@ const Table = ({documents, headers, linkTo}) => (
                         (<td key={j}> 
                             {document[header.key]} 
                         </td>))}
-                        {linkTo && (<td> <Link to={`${linkTo}/${document.id}`}>Editar</Link></td>)}
+                        <td>
+                            {linkTo && (<Link to={`${linkTo}/${document[primaryKey]}`}>Editar</Link>)}
+                            {onDelete && (<button onClick={() => onDelete(document[primaryKey])}>Borrar</button>)}
+                        </td>
                     </tr>))
             }
         </tbody>

@@ -1,39 +1,25 @@
 import {call, put, select} from 'redux-saga/effects';
-import Axios from 'axios';
-import {fetchUsersSucceeded, submitUserSucceeded} from '../actions/user';
-
-const apiCallUsers = async () => {
-    const {data, status} = await Axios.get('http://localhost:3001/api/users');
-    console.log(data);
-    if (status !== 200) {
-      return [];
-    } 
-    return data;
-}
-
-const apiSaveUser = user => {
-  try{
-    //Si tiene id, va a editar un usuario
-    if (user.id) {
-      return Axios.put(`http://localhost:3001/api/users/${user.id}`, user);
-    }
-    //Si no tiene id, va a agregar uno
-    else {
-      return Axios.post('http://localhost:3001/api/users', user);
-    }
-  }
-  catch (err) {
-    return {status: 500, data: null}
-  }
-}
+import {fetchUsersSucceeded, submitUserSucceeded, fetchUserSucceeded, deleteUserSucceeded} from '../actions/user';
+import UserService from '../services/user';
 
 export function* fetchUsers({filter}) {
-    const users = yield call (apiCallUsers, filter);
+    const users = yield call (UserService.apiCallUsers, filter);
     yield put(fetchUsersSucceeded(users));
 }
 
 export function* submitUser () {
   const {currentUsers} = yield select (state => state.user);
-  const {status, data} = yield call(apiSaveUser, currentUsers);
+  const {status, data} = yield call(UserService.apiSaveUser, currentUsers);
   yield put (submitUserSucceeded(status, data));  
+}
+
+export function* fetchUser({id}) {
+  const user = yield call (UserService.apiCallOne, id);
+  yield put(fetchUserSucceeded(user));
+}
+
+export function* deleteUser({id}) {
+  yield call (UserService.apiDeleteOne, id);
+  yield put(deleteUserSucceeded(true));
+  yield call(fetchUsers, {});
 }

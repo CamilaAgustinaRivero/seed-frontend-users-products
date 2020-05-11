@@ -1,10 +1,18 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {InputText, InputEmail, InputPassword} from '../../components/Form';
-import {updateUsers, submitUserRequested} from '../../actions/user';
+import {updateUsers, submitUserRequested, fetchUserRequested} from '../../actions/user';
 
 
 class Edit extends Component {
+    componentDidMount() {
+        console.log(this.props);
+        const {id} = this.props.match.params;
+        if (id) {
+            this.props.fetchUser(id);
+        }
+    }
+
     //Evento de cambio
     handleChange(obj) {
         const {user} = this.props;
@@ -54,7 +62,8 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
     updateUser: user => dispatch(updateUsers(user)),
-    submit: () => dispatch(submitUserRequested())
+    submit: () => dispatch(submitUserRequested()),
+    fetchUser: id => dispatch(fetchUserRequested(id))
 });
 export default connect(
     mapStateToProps,

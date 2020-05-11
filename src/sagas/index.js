@@ -4,8 +4,8 @@ import {all, takeEvery} from 'redux-saga/effects';
 import {FETCH_PRODUCT_REQUESTED} from '../actions/product';
 import {fetchProducts} from './product';
 
-import {FETCH_USERS_REQUESTED, SUBMIT_USER_REQUESTED} from '../actions/user';
-import {fetchUsers, submitUser} from './user';
+import {FETCH_USERS_REQUESTED, SUBMIT_USER_REQUESTED, FETCH_USER_REQUESTED, DELETE_USER_REQUESTED} from '../actions/user';
+import {fetchUsers, submitUser, fetchUser, deleteUser} from './user';
 
 //Es una funcion de escucha
 export default function* root () {
@@ -13,6 +13,8 @@ export default function* root () {
     yield all([
         takeEvery(FETCH_PRODUCT_REQUESTED, fetchProducts),
         takeEvery(FETCH_USERS_REQUESTED, fetchUsers),
-        takeEvery(SUBMIT_USER_REQUESTED, submitUser)
+        takeEvery(SUBMIT_USER_REQUESTED, submitUser),
+        takeEvery(FETCH_USER_REQUESTED, fetchUser),
+        takeEvery(DELETE_USER_REQUESTED, deleteUser)
     ])
 }

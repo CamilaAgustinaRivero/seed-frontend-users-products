@@ -1,4 +1,10 @@
-import {FETCH_USERS_REQUESTED, FETCH_USERS_SUCCEEDED, UPDATE_USERS} from '../actions/user';
+import {
+  FETCH_USERS_REQUESTED, 
+  FETCH_USERS_SUCCEEDED, 
+  UPDATE_USERS,
+  FETCH_USER_REQUESTED,
+  FETCH_USER_SUCCEEDED
+ } from '../actions/user';
 
 const initialState = {
     users: [],
@@ -50,6 +56,10 @@ export default (state = initialState, action) => {
       case FETCH_USERS_SUCCEEDED:
         return {...state, users: action.users};
       case UPDATE_USERS:
+        return {...state, currentUsers: action.user};
+      case FETCH_USER_REQUESTED:
+        return {...state, currentUsers: initialState.currentUsers};
+      case FETCH_USER_SUCCEEDED:
         return {...state, currentUsers: action.user}
       default:
         return {...state}

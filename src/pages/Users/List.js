@@ -4,11 +4,11 @@ import {Link} from 'react-router-dom';
 import Title from '../../components/Title';
 import UsersTable from '../../components/Table';
 
-import {fetchUsersRequested} from '../../actions/user';
+import {fetchUsersRequested, deleteUserRequested} from '../../actions/user';
 
 
 class Users extends Component {
-  async componentDidMount() {
+  componentDidMount() {
     this.props.requestUser();
   }
   render(){
@@ -19,9 +19,9 @@ class Users extends Component {
           <Title title="Lista de usuarios"/>
           <Link to={'/users/new'}> Nuevo usuario </Link>
         </header>
-        <body>
-          <UsersTable {...{documents, headers, linkTo:'/users'}}/> 
-        </body>
+        
+        <UsersTable {...{documents, headers, linkTo:'/users'}} onDelete={id => this.props.deleteUser(id)}/> 
+        
       </div>
     );
   }
@@ -37,7 +37,8 @@ const mapStateToProps = (state) => ({
 })
 //Nuestro disparador de acciones, Todas las propiedades que vienen por herencia
 const mapDispatchToProps = (dispatch) => ({
-  requestUser: () => dispatch(fetchUsersRequested())
+  requestUser: () => dispatch(fetchUsersRequested()),
+  deleteUser: id => dispatch(deleteUserRequested(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);

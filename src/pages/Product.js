@@ -16,9 +16,9 @@ class Products extends Component {
         <header>
           <Title title="Lista de productos"/>
         </header>
-        <body>
-          <ProductsTable {...{documents, headers}}/> 
-        </body>
+
+        <ProductsTable {...{documents, headers}}/> 
+        
       </div>
     );
   }
