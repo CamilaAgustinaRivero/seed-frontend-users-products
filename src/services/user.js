@@ -18,7 +18,7 @@ export default class User {
         }
         //Si no tiene id, va a agregar uno
         else {
-          return Axios.post('http://localhost:3001/api/users', user);
+          return HTTP.post('api/users', user);
         }
       }
       catch (err) {
