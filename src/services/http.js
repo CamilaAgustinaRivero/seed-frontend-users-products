@@ -46,6 +46,22 @@ class HTTP {
         }
 
     }
+
+    static async delete(url, context){
+        const response = await fetch(`${API}/${url}`, {
+            method: 'delete',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(context)
+        });
+        try {
+            if (response.ok) {
+                return response.json();
+            }
+        }
+        catch(err) {
+            return {error: true};
+        }
+    }
 }
 
 export default HTTP;
