@@ -13,9 +13,26 @@ class HTTP {
         }
     }
 
-    static async post(url,context){
+    static async post(url, context){
         const response = await fetch(`${API}/${url}`, {
             method: 'post',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(context)
+        });
+        try {
+            if (response.ok) {
+                return response.json();
+            }
+        }
+        catch(err) {
+            return {error: true};
+        }
+
+    }
+
+    static async put(url, context){
+        const response = await fetch(`${API}/${url}/${context.id}`, {
+            method: 'put',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify(context)
         });
